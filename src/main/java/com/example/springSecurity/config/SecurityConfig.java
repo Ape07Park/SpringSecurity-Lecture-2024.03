@@ -29,7 +29,7 @@ public class SecurityConfig {
 						.permitAll() // img 밑의 모든 것들
 
 						// 관리자 권한 주기
-						.requestMatchers("/admin/**").hasAuthority("ADMIN").anyRequest().authenticated())
+						.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN").anyRequest().authenticated())
 					.formLogin(auth -> auth
 						// login page 지정
 						.loginPage("/user/login") // login 폼
@@ -41,9 +41,13 @@ public class SecurityConfig {
 						.defaultSuccessUrl("/user/loginSuccess", true) // 내가 로그인 후 해야할 일 ex) 로그인 끝나고 세션 세팅, 오늘의 메세지 등						
 						.permitAll()
 				)
-			;
+				.logout(auth -> auth
+					.logoutUrl("/user/logout")
+					.invalidateHttpSession(true)	// 로그아웃 시 세션 초기화 
+					.deleteCookies("JSESSIONID")	// 로그아웃 시 쿠키 삭제
+					.logoutSuccessUrl("/user/login")
+				);
 			
-
 		return http.build();
 	}
 }

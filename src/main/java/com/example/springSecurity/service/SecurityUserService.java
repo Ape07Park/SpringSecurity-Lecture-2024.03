@@ -13,11 +13,13 @@ public interface SecurityUserService {
 	List<SecurityUser> getSecurityUserList(int page);
 	
 	int getSecurityUserCount();
-	
+		
 	void insertSecurityUser(SecurityUser securityUser);
 	
 	void updateSecurityUser(SecurityUser securityUser);
 	
 	void deleteSecurityUser(String uid);
+	
+	
 	
 }
