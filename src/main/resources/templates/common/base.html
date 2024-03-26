@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<header th:fragment="head">
-		<title>Spring Security</title>
+		<title>Spring Security Project</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,7 +15,6 @@
 			a { text-decoration: none; }
 			.disabled-link { pointer-events: none; }
 		</style>
-		<script src="/ss/js/aside.js?v=3"></script>
 	</header>
 </head>
 <body>
@@ -26,13 +25,13 @@
 					<ul class="navbar-nav">
 						<a class="navbar-brand mx-5" href="#"><img src="/ss/img/ck-logo.png" height="36"></a>
 						<li class="nav-item ms-3">
-							<a class="nav-link" th:classappend="${session.menu eq 'board' ? 'active' : ''}" href="/ss/board/list"><i class="far fa-list-alt"></i> 게시판</a>
+							<a class="nav-link" th:classappend="${menu eq 'board' ? 'active' : ''}" href="#"><i class="far fa-list-alt"></i> 게시판</a>
 						</li>
 						<li class="nav-item ms-3">
-							<a class="nav-link" th:classappend="${session.menu eq 'user' ? 'active' : ''}" href="/ss/user/list"><i class="fas fa-user-friends"></i> 사용자</a>
+							<a class="nav-link" th:classappend="${menu eq 'user' ? 'active' : ''}" href="/ss/user/list"><i class="fas fa-user-friends"></i> 사용자</a>
 						</li>
 						<li class="nav-item ms-3">
-							<a class="nav-link" th:classappend="${session.menu eq 'schedule' ? 'active' : ''}" href="/ss/schedule/calendar"><i class="fa-solid fa-calendar-days"></i> 스케쥴</a>
+							<a class="nav-link" th:classappend="${menu eq 'schedule' ? 'active' : ''}" href="#"><i class="fa-solid fa-calendar-days"></i> 스케쥴</a>
 						</li>
 						<li class="nav-item ms-3">
 							<span th:if="${session.sessUid}">
@@ -79,7 +78,7 @@
 						<i class="fa-solid fa-location-dot me-2"></i> [[${session.location}]]
 							<a href="#" id="getWeatherButton"><span class="badge bg-secondary">날씨</span></a><br>
 						<div id="weather"></div>
-						<!-- <button class="btn btn-sm btn-outline-primary mt-3">Edit Picture</button> -->
+						<!-- <button class="btn btn-sm btn-outline-primary mt-3">Edit Profile</button> -->
 					</div>
 				</aside>
 			</div>

@@ -3,20 +3,42 @@ package com.example.springSecurity.entity;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import lombok.RequiredArgsConstructor;
 
 // Spring Security가 로그인 POST 요청을 받아 로그인을 진행시킴 
 // 로컬 로그인 - UserDetails 구현
 // 소셜 로그인 - OAuth2User 구현
-@RequiredArgsConstructor 
-public class MyUserDetails implements UserDetails {
-	private final SecurityUser securityUser; // 스프링이 생성자 방식으로 생성자 주입해줌
+public class MyUserDetails implements UserDetails, OAuth2User {
 	
-	// 해당 사용자의 권한을 리턴 ex) 관리자냐 사용자냐 등 
+	private SecurityUser securityUser; // 스프링이 생성자 방식으로 생성자 주입해줌
+	private Map<String, Object> attributes;
+	
+	/*
+	 * 생성자 
+	 */
+	public MyUserDetails() { } 
+	
+	// 로컬 로그인 - 스프링이 생성자 방식으로 의존성 주입 
+	public MyUserDetails(SecurityUser securityUser) {
+		this.securityUser = securityUser;
+	} 
+	
+	// 소셜 로그인 - 스프링이 생성자 방식으로 의존성 주입 
+	public MyUserDetails(SecurityUser securityUser, Map<String, Object> attributes) {
+		this.securityUser = securityUser;
+		this.attributes = attributes;
+	} 
+	
+	
+	/*
+	 *  해당 사용자의 권한을 리턴 ex) 관리자냐 사용자냐 등 
+	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() { // GrantedAuthority를 상속받은 어떤 것이든 가능 
 		Collection<GrantedAuthority> collect = new ArrayList<>();
@@ -29,6 +51,9 @@ public class MyUserDetails implements UserDetails {
 		return collect;
 	}
 
+	/*
+	 *  UserDetails 구현부분
+	 */
 	@Override
 	public String getPassword() {
 		return securityUser.getPwd();
@@ -62,4 +87,20 @@ public class MyUserDetails implements UserDetails {
 		return true;
 	}
 	
+	/*
+	 * OAuth2User 구현부분
+	 */
+	@Override
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+	
+	@Override
+	public String getName() {
+		return null;
+	}
+	
+	public SecurityUser getSecurityUser() {
+		return securityUser;
+	}
 }
