@@ -34,6 +34,7 @@ public class SecurityConfig {
 
 						// 관리자 권한 주기
 						.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN").anyRequest().authenticated())
+				
 					.formLogin(auth -> auth
 						// login page 지정
 						.loginPage("/user/login") // login 폼
